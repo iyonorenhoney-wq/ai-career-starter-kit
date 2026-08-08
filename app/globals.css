@@ -1,0 +1,180 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   AI CAREER STARTER KIT — Design Tokens
+
+   ブランド方針（2026-08-08 更新）:
+     BLACK / NAVY / WHITE を土台（80〜90%）、
+     TURQUOISE / ACCENT BLUE をアクセント（10〜20%）として使用する。
+
+     - 白黒を土台にする
+     - 深い紺で知的・上質・AI感を出す
+     - ターコイズは CTA・線・グラフ・光・ポイントに使う
+     - 鮮やかな青の面積を大きくしない
+     - ネオンサイトにしない / ゴールドは使わない
+     - タイプ別に紫・緑・オレンジ等は使用しない（08 §105）
+
+   結果画面は「NAVY / BLACK 背景 + WHITE 文字 + TURQUOISE の光」を基本とする。
+   ========================================================================== */
+
+@theme {
+  /* --- Base（土台：80〜90%） --------------------------------------------- */
+  --color-brand-black: #070a0f;
+  --color-brand-navy: #0b1d33;
+  --color-brand-navy-light: #153a5b;
+  --color-brand-white: #ffffff;
+  --color-brand-off-white: #f7f9fc;
+
+  /* --- Accent（10〜20%） ------------------------------------------------- */
+  --color-brand-turquoise: #4bd6d6;
+  --color-brand-turquoise-light: #7be8e8;
+  --color-brand-accent-blue: #1f6fb2;
+
+  /* --- Supporting Colors ------------------------------------------------- */
+  /* 回答カードのボーダー（08 §43 をNAVY寄りへ調整） */
+  --color-brand-border: #dbe2ea;
+  /* LPのごく薄い背景（08 §22 をNAVY寄りへ調整） */
+  --color-brand-tint: #f4f7fb;
+
+  /* --- Typography -------------------------------------------------------- */
+  /* 英字は Geist、日本語は Noto Sans JP へフォールバック（08 §24） */
+  --font-sans: var(--font-geist), var(--font-noto-sans-jp), system-ui, sans-serif;
+  --font-en: var(--font-geist), system-ui, sans-serif;
+  --font-jp: var(--font-noto-sans-jp), system-ui, sans-serif;
+
+  /* Font Hierarchy（08 §25）— スマホからPCまでを clamp で連続変化させる */
+  /* Hero: SP 32px → PC 56px */
+  --text-hero: clamp(2rem, 5.5vw, 3.5rem);
+  --text-hero--line-height: 1.25;
+  /* H1: SP 36px → PC 48px */
+  --text-h1: clamp(2.25rem, 4vw, 3rem);
+  --text-h1--line-height: 1.3;
+  /* H2: SP 28px → PC 36px */
+  --text-h2: clamp(1.75rem, 3.2vw, 2.25rem);
+  --text-h2--line-height: 1.35;
+  /* H3: SP 20px → PC 24px */
+  --text-h3: clamp(1.25rem, 2vw, 1.5rem);
+  --text-h3--line-height: 1.45;
+  /* 質問文: SP 22px → PC 32px（08 §42） */
+  --text-question: clamp(1.375rem, 3.4vw, 2rem);
+  --text-question--line-height: 1.5;
+  /* 本文: SP 15px → PC 17px */
+  --text-body: clamp(0.9375rem, 1.1vw, 1.0625rem);
+  --text-body--line-height: 1.8;
+
+  /* --- Radius（08 §102） -------------------------------------------------- */
+  --radius-card: 20px;
+  --radius-btn: 16px;
+  --radius-badge: 999px;
+
+  /* --- Shadow（08 §101） -------------------------------------------------- */
+  --shadow-soft: 0 12px 40px rgba(8, 11, 16, 0.08);
+  --shadow-card: 0 4px 16px rgba(8, 11, 16, 0.05);
+}
+
+/* ==========================================================================
+   Gradients / Effects
+   Tailwindのトークン名前空間に載らないため CSS 変数 + ユーティリティで定義する。
+   ========================================================================== */
+
+:root {
+  /* CTA用（08 §18）— ACCENT BLUE から TURQUOISE へ。使用量は少なめに */
+  --gradient-brand: linear-gradient(135deg, #1f6fb2 0%, #4bd6d6 100%);
+  /* プログレスバー用（08 §40） */
+  --gradient-progress: linear-gradient(90deg, #1f6fb2, #4bd6d6);
+  /* 結果画面などのダーク背景（08 §19）— BLACK から深いNAVYへ */
+  --gradient-dark: linear-gradient(145deg, #070a0f 0%, #0b1d33 55%, #153a5b 100%);
+  /* 結果カードのグロー（08 §58）— NAVY地にTURQUOISEの光 */
+  --gradient-card-glow: radial-gradient(
+      circle at 80% 10%,
+      rgba(75, 214, 214, 0.16),
+      transparent 38%
+    ),
+    radial-gradient(circle at 15% 85%, rgba(31, 111, 178, 0.22), transparent 42%),
+    #070a0f;
+}
+
+@utility bg-brand-gradient {
+  background: var(--gradient-brand);
+}
+
+@utility bg-progress-gradient {
+  background: var(--gradient-progress);
+}
+
+@utility bg-dark-gradient {
+  background: var(--gradient-dark);
+}
+
+@utility bg-card-glow {
+  background: var(--gradient-card-glow);
+}
+
+/* 見出しのアクセントに使うグラデーション文字 */
+@utility text-brand-gradient {
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* 英字ラベル（MAIN TYPE / YOUR GOAL 等）用（08 §27） */
+@utility label-en {
+  font-family: var(--font-en);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+@layer base {
+  html {
+    /* スマホの意図しない文字拡大を防ぐ */
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-brand-white);
+    color: var(--color-brand-black);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* キーボード操作時のフォーカスは必ず可視化する（08 §111） */
+  :focus-visible {
+    outline: 2px solid var(--color-brand-accent-blue);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* マウスクリック時にフォーカスリングを出さない */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+}
+
+/* ==========================================================================
+   Accessibility — モーション軽減（OS設定を尊重する）
+   Framer Motion 導入後もこのCSSが最終防衛線になる。
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
