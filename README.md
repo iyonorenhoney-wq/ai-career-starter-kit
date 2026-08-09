@@ -52,6 +52,8 @@ http://localhost:3000 を開いてください。
 | `npm run start` | 本番サーバー起動 |
 | `npm run lint` | ESLint |
 | `npm run typecheck` | 型チェック（`tsc --noEmit`） |
+| `npm run test` | テスト（Vitest） |
+| `npm run test:watch` | テスト（監視モード） |
 
 ---
 
@@ -73,15 +75,16 @@ URL確定後は `.env.local` に値を入れて開発サーバーを再起動す
 | フレームワーク | Next.js 16（App Router） |
 | 言語 | TypeScript（strict） |
 | スタイル | Tailwind CSS v4 |
+| チャート | Recharts（結果画面で遅延読み込み） |
+| テスト | Vitest |
 | 永続化 | localStorage のみ |
 
 サーバー処理・データベース・ログインは使用しません。採点はすべてブラウザ内で完結します。
 
-以下は該当STEPで追加します（STEP1時点では未導入）。
+以下は該当STEPで追加します（未導入）。
 
-- Framer Motion（STEP10）
-- Recharts（STEP6・遅延読み込み）
 - Lucide React（STEP7）
+- Framer Motion（STEP10）
 
 ---
 
@@ -163,11 +166,11 @@ SNSアイコン・PDF・Udemy・商品まで同じブランド世界観へつな
 | STEP | 内容 | 状態 |
 | --- | --- | --- |
 | 1 | プロジェクト土台 | 完了 |
-| 2 | 型定義 | — |
-| 3 | 質問データ | — |
-| 4 | 採点ロジック | — |
+| 2 | 型定義 | 完了 |
+| 3 | 質問データ | 完了 |
+| 4 | 採点ロジック | 完了 |
 | 5 | 診断UI（localStorage含む） | 完了 |
-| 6 | 結果画面 | — |
+| 6 | 結果画面 | 完了 |
 | 7 | デザイン | — |
 | 8 | LINE導線 / LP | — |
 | 9 | レスポンシブ | — |
