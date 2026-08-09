@@ -4,12 +4,7 @@
     {
       "name": "ai-career-starter-kit",
       "runtimeExecutable": "npm",
-      "runtimeArgs": [
-        "--prefix",
-        "/Users/maedamomoka/Desktop/AIキャリアスターターキット専用",
-        "run",
-        "dev"
-      ],
+      "runtimeArgs": ["run", "dev"],
       "port": 3000
     }
   ]

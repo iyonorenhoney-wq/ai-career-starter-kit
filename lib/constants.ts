@@ -141,8 +141,37 @@ export const RESULT_ID_ALPHABET = "ABCDEFGHJKMNPQRSTUVWXYZ23456789";
 // 出典: docs/08_web-spec.md §85-86
 // ============================================================================
 
-/** localStorageのキー（STEP5で使用） */
+/** localStorageのキー */
 export const STORAGE_KEYS = {
   progress: "aiCareerDiagnosisProgress",
   result: "aiCareerDiagnosisResult",
 } as const;
+
+// ============================================================================
+// 画面の挙動
+// 出典: docs/01_diagnosis-spec.md §15, §70 / docs/08_web-spec.md §47, §49
+// ============================================================================
+
+/**
+ * 回答カードをタップしてから次の質問へ進むまでの待ち時間（ミリ秒）。
+ *
+ * 選択状態が見えないまま画面が変わらないよう、200〜350msの範囲に収める。
+ */
+export const ANSWER_ADVANCE_DELAY_MS = 280;
+
+/** 計算演出の1メッセージあたりの表示時間（ミリ秒） */
+export const CALCULATING_STEP_MS = 500;
+
+/**
+ * 計算演出のメッセージ。
+ * 出典: docs/01_diagnosis-spec.md §71 / docs/08_web-spec.md §49
+ */
+export const CALCULATING_MESSAGES = [
+  "AI活用タイプを分析中",
+  "あなたの強みを整理中",
+  "おすすめルートを作成中",
+] as const;
+
+/** 計算演出の合計時間（ミリ秒）。約1〜2秒に収める */
+export const CALCULATING_TOTAL_MS =
+  CALCULATING_STEP_MS * CALCULATING_MESSAGES.length;
