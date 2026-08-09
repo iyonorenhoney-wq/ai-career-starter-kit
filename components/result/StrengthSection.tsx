@@ -7,6 +7,10 @@
  *
  * MAIN TYPE の強みから3つを表示する。
  * データは { title, body } 形式をそのまま使う。
+ *
+ * デザイン方針:
+ *   カード3枚を横並びにせず、縦に読んでテンポよく理解できる構成にする。
+ *   大きな番号を目印にして、スマホでも区切りが分かるようにする。
  */
 
 import { getMainType } from "@/lib/resultLabels";
@@ -27,34 +31,36 @@ export function StrengthSection({ result }: StrengthSectionProps) {
   const strengths = main.strengths.slice(0, STRENGTH_LIMIT);
 
   return (
-    <section className="flex flex-col gap-6" aria-labelledby="strengths">
-      <div className="flex flex-col gap-2">
-        <p className="label-en text-xs text-brand-accent-blue">
-          Your Strengths
-        </p>
-        <h2 id="strengths" className="text-h3 font-bold">
-          あなたの強み
-        </h2>
-      </div>
+    <section className="flex flex-col" aria-labelledby="strengths">
+      <p className="eyebrow text-brand-turquoise">Your Strengths</p>
+      <h2 id="strengths" className="text-h3 mt-4 font-bold">
+        あなたの強み
+      </h2>
 
-      <ul className="grid gap-4 sm:grid-cols-3">
+      <ol className="mt-8 flex flex-col">
         {strengths.map((strength, index) => (
           <li
             key={strength.title}
-            className="flex flex-col gap-2 rounded-card border border-brand-border bg-brand-white p-5 shadow-card"
+            className="flex gap-5 border-t border-brand-border py-6"
           >
-            <span className="label-en text-brand-turquoise text-sm font-bold">
+            <span
+              aria-hidden="true"
+              className="label-en text-brand-turquoise w-8 shrink-0 pt-0.5 text-sm font-bold"
+            >
               {pad2(index + 1)}
             </span>
-            <h3 className="text-sm font-bold text-brand-navy">
-              {strength.title}
-            </h3>
-            <p className="text-xs leading-relaxed text-brand-black/70">
-              {strength.body}
-            </p>
+
+            <div className="flex flex-col gap-2">
+              <h3 className="text-brand-navy text-base font-bold">
+                {strength.title}
+              </h3>
+              <p className="text-brand-black/70 text-sm leading-loose">
+                {strength.body}
+              </p>
+            </div>
           </li>
         ))}
-      </ul>
+      </ol>
     </section>
   );
 }

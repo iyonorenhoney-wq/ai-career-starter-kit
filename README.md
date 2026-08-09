@@ -76,6 +76,7 @@ URL確定後は `.env.local` に値を入れて開発サーバーを再起動す
 | 言語 | TypeScript（strict） |
 | スタイル | Tailwind CSS v4 |
 | チャート | Recharts（結果画面で遅延読み込み） |
+| アイコン | Lucide React |
 | テスト | Vitest |
 | 永続化 | localStorage のみ |
 
@@ -83,7 +84,6 @@ URL確定後は `.env.local` に値を入れて開発サーバーを再起動す
 
 以下は該当STEPで追加します（未導入）。
 
-- Lucide React（STEP7）
 - Framer Motion（STEP10）
 
 ---
@@ -171,7 +171,7 @@ SNSアイコン・PDF・Udemy・商品まで同じブランド世界観へつな
 | 4 | 採点ロジック | 完了 |
 | 5 | 診断UI（localStorage含む） | 完了 |
 | 6 | 結果画面 | 完了 |
-| 7 | デザイン | — |
+| 7 | デザイン（診断・結果画面） | 完了 |
 | 8 | LINE導線 / LP | — |
 | 9 | レスポンシブ | — |
 | 10 | 最終調整 | — |

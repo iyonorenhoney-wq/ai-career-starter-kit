@@ -8,6 +8,8 @@
  * 回答カードより目立たせない。
  */
 
+import { ArrowLeft } from "lucide-react";
+
 type BackButtonProps = {
   onClick: () => void;
 };
@@ -17,9 +19,10 @@ export function BackButton({ onClick }: BackButtonProps) {
     <button
       type="button"
       onClick={onClick}
-      className="min-h-12 self-start px-2 text-sm text-brand-black/55 transition-colors hover:text-brand-black"
+      className="text-note text-brand-black/45 hover:text-brand-navy flex min-h-12 items-center gap-2 self-start pr-3 transition-colors"
     >
-      ← 前の質問
+      <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
+      前の質問
     </button>
   );
 }

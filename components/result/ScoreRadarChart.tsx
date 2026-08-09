@@ -36,13 +36,13 @@ export default function ScoreRadarChart({ rows }: ScoreRadarChartProps) {
 
   return (
     // チャートは数値表と同じ情報を図にしたもののため、読み上げからは除外する
-    <div className="h-[260px] w-full sm:h-[300px]" aria-hidden="true">
+    <div className="h-[220px] w-full" aria-hidden="true">
       <ResponsiveContainer width="100%" height="100%">
-        <RadarChart data={data} outerRadius="72%">
-          <PolarGrid stroke={NAVY} strokeOpacity={0.14} />
+        <RadarChart data={data} outerRadius="70%">
+          <PolarGrid stroke={NAVY} strokeOpacity={0.1} />
           <PolarAngleAxis
             dataKey="label"
-            tick={{ fill: NAVY, fontSize: 12, opacity: 0.75 }}
+            tick={{ fill: NAVY, fontSize: 11, opacity: 0.55 }}
           />
           {/* 0〜100で固定し、回答によって軸の目盛りが変わらないようにする */}
           <PolarRadiusAxis domain={[0, 100]} tick={false} axisLine={false} />

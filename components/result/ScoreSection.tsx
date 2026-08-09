@@ -7,6 +7,12 @@
  *       docs/08_web-spec.md §68-71
  *
  * 5タイプすべてを、数値とレーダーチャートの両方で表示する。
+ *
+ * デザイン方針:
+ *   グラフを見るサイトではなく診断結果を見るサイトなので、
+ *   数値表を主役にし、チャートは補助として控えめに置く。
+ *   MAIN / SUB の数値が自然に目へ入ることを優先する。
+ *
  * 「適性率」「成功率」とは呼ばない（02 §29）。
  */
 
@@ -22,12 +28,7 @@ const ScoreRadarChart = dynamic(
   () => import("@/components/result/ScoreRadarChart"),
   {
     ssr: false,
-    loading: () => (
-      <div
-        className="h-[260px] w-full sm:h-[300px]"
-        aria-hidden="true"
-      />
-    ),
+    loading: () => <div className="h-[220px] w-full" aria-hidden="true" />,
   },
 );
 
@@ -39,72 +40,81 @@ export function ScoreSection({ result }: ScoreSectionProps) {
   const rows = getScoreRows(result);
 
   return (
-    <section className="flex flex-col gap-6" aria-labelledby="score">
-      <div className="flex flex-col gap-2">
-        <p className="label-en text-xs text-brand-accent-blue">AI Score</p>
-        <h2 id="score" className="text-h3 font-bold">
-          AI活用スコア
-        </h2>
-      </div>
+    <section className="flex flex-col" aria-labelledby="score">
+      <p className="eyebrow text-brand-turquoise">AI Score</p>
+      <h2 id="score" className="text-h3 mt-4 font-bold">
+        AI活用スコア
+      </h2>
 
-      <div className="rounded-card border border-brand-border bg-brand-white p-4 shadow-card sm:p-6">
-        <ScoreRadarChart rows={rows} />
-
-        {/* 数値表。チャートと同じ値を、読み上げ・確認用に必ず併記する */}
-        <ul className="mt-2 flex flex-col gap-3">
-          {rows.map((row) => (
-            <li key={row.type} className="flex flex-col gap-1.5">
-              <div className="flex items-baseline justify-between gap-3">
-                <span className="flex items-center gap-2 text-sm">
-                  <span
-                    className={
-                      row.isMain ? "font-bold text-brand-navy" : undefined
-                    }
-                  >
-                    {row.label}
-                  </span>
-                  {row.isMain ? (
-                    <span className="label-en rounded-badge bg-brand-navy px-2 py-0.5 text-[10px] text-brand-white">
-                      Main
-                    </span>
-                  ) : null}
-                  {row.isSub ? (
-                    <span className="label-en rounded-badge border border-brand-turquoise bg-brand-turquoise/15 px-2 py-0.5 text-[10px] text-brand-navy">
-                      Sub
-                    </span>
-                  ) : null}
-                </span>
-
+      {/* 数値表を主役にする。罫線で区切り、カードを増やさない */}
+      <ul className="mt-8 flex flex-col">
+        {rows.map((row) => (
+          <li
+            key={row.type}
+            className="flex flex-col gap-2 border-t border-brand-border py-4"
+          >
+            <div className="flex items-baseline justify-between gap-3">
+              <span className="flex items-baseline gap-2.5">
                 <span
-                  className={`label-en text-sm ${
-                    row.isMain ? "font-bold text-brand-navy" : "text-brand-black/70"
-                  }`}
-                >
-                  {row.score}
-                </span>
-              </div>
-
-              {/* 数値だけでなくバーでも見せる */}
-              <div
-                className="h-1.5 w-full overflow-hidden rounded-badge bg-brand-off-white"
-                aria-hidden="true"
-              >
-                <div
                   className={
                     row.isMain
-                      ? "bg-progress-gradient h-full rounded-badge"
-                      : "h-full rounded-badge bg-brand-navy/25"
+                      ? "text-brand-navy text-base font-bold"
+                      : "text-brand-black/70 text-sm"
                   }
-                  style={{ width: `${row.score}%` }}
-                />
-              </div>
-            </li>
-          ))}
-        </ul>
+                >
+                  {row.label}
+                </span>
+                {row.isMain ? (
+                  <span className="eyebrow text-brand-turquoise text-[10px]">
+                    Main
+                  </span>
+                ) : null}
+                {row.isSub ? (
+                  <span className="eyebrow text-brand-black/35 text-[10px]">
+                    Sub
+                  </span>
+                ) : null}
+              </span>
+
+              <span
+                className={`label-en tabular-nums ${
+                  row.isMain
+                    ? "text-brand-navy text-2xl leading-none font-bold"
+                    : "text-brand-black/45 text-base leading-none"
+                }`}
+              >
+                {row.score}
+              </span>
+            </div>
+
+            {/* MAIN / SUB だけ線で強調し、他は静かに置く */}
+            <div
+              className="bg-brand-border/60 h-px w-full overflow-hidden"
+              aria-hidden="true"
+            >
+              <div
+                className={`h-px ${
+                  row.isMain
+                    ? "bg-brand-turquoise"
+                    : row.isSub
+                      ? "bg-brand-navy/40"
+                      : "bg-brand-navy/15"
+                }`}
+                style={{ width: `${row.score}%` }}
+              />
+            </div>
+          </li>
+        ))}
+      </ul>
+
+      {/* チャートは補助。数値表の下に控えめに置く */}
+      <div className="mt-8 border-t border-brand-border pt-6">
+        <h3 className="eyebrow text-brand-black/35">Balance</h3>
+        <ScoreRadarChart rows={rows} />
       </div>
 
       {/* 能力評価ではないことを明示する（02 §34） */}
-      <p className="text-xs leading-relaxed text-brand-black/50">
+      <p className="text-brand-black/45 mt-4 text-xs leading-relaxed">
         AI活用スコアは、あなたの回答傾向から各AI活用スタイルとの近さを数値化したものです。能力や成功確率を示すものではありません。
       </p>
     </section>

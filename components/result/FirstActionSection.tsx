@@ -3,8 +3,12 @@
  *
  * 出典: docs/01_diagnosis-spec.md §41 / docs/08_web-spec.md §74
  *
- * 結果画面の中でかなり目立たせる。
- * PDFを受け取る前でも、今日できる行動を1つだけ提示する。
+ * 結果を読んで終わりにせず、「じゃあ今日何する？」へつなげる場所。
+ * ページ内でも目立たせるが、CTAとは役割を分ける。
+ *
+ * デザイン方針:
+ *   CTAは「ダーク + ボタン」、ここは「淡いターコイズ + ボタンなし」。
+ *   色と構造の両方で役割を分ける。
  */
 
 import { getMainType } from "@/lib/resultLabels";
@@ -19,27 +23,25 @@ export function FirstActionSection({ result }: FirstActionSectionProps) {
 
   return (
     <section
-      className="border-brand-turquoise/40 bg-brand-tint flex flex-col gap-4 rounded-card border-2 p-6 sm:p-8"
+      className="bg-brand-tint relative overflow-hidden rounded-card px-7 py-9 sm:px-10 sm:py-11"
       aria-labelledby="first-action"
     >
-      <div className="flex items-center gap-2">
-        <span
-          aria-hidden="true"
-          className="bg-brand-turquoise h-2 w-2 rounded-badge"
-        />
-        <p className="label-en text-xs font-semibold text-brand-navy">
-          Today&apos;s First Step
-        </p>
-      </div>
+      {/* 上辺のターコイズライン。ここが行動の起点だと示す */}
+      <div
+        aria-hidden="true"
+        className="bg-brand-turquoise absolute inset-x-0 top-0 h-0.5"
+      />
+
+      <p className="eyebrow text-brand-turquoise">Today&apos;s First Step</p>
 
       <h2
         id="first-action"
-        className="text-brand-navy text-lg leading-relaxed font-bold sm:text-xl"
+        className="text-brand-navy mt-5 text-xl leading-relaxed font-bold sm:text-2xl"
       >
         {main.firstAction.title}
       </h2>
 
-      <p className="text-sm leading-relaxed text-brand-black/75">
+      <p className="text-brand-black/70 mt-4 text-sm leading-loose">
         {main.firstAction.body}
       </p>
     </section>

@@ -3,11 +3,14 @@
  *
  * 出典: docs/01_diagnosis-spec.md §38 / docs/08_web-spec.md §66
  *
- * MAINより簡潔に表示する。
- * 「2番目のタイプ」ではなく「MAINを強くする第二の武器」として見せる
- * （docs/06_pdf-spec.md §19）。
+ * MAINより明確に控えめにする。
+ * ただしMAINの縮小コピーにはせず、「第二の強み」という意味が
+ * 視覚的にも伝わる形にする（docs/06_pdf-spec.md §19）。
+ *
+ * MAINは「大きな見出し」、SUBは「補足として添えられた一枚」という差をつける。
  */
 
+import { TypeIcon } from "@/components/ui/TypeIcon";
 import { getSubType } from "@/lib/resultLabels";
 import type { DiagnosisResult } from "@/types/diagnosis";
 
@@ -20,28 +23,29 @@ export function SubTypeSection({ result }: SubTypeSectionProps) {
 
   return (
     <section
-      className="flex flex-col gap-4 rounded-card border border-brand-border bg-brand-white p-6 shadow-card"
+      className="bg-brand-off-white flex gap-5 rounded-card px-6 py-7 sm:px-8"
       aria-labelledby="sub-type"
     >
-      <div className="flex flex-col gap-2">
-        <p className="label-en text-xs text-brand-accent-blue">
-          Your Second Strength
-        </p>
+      {/* MAINと違い、アイコンは小さく脇へ添える */}
+      <TypeIcon
+        name={sub.icon}
+        className="text-brand-navy/45 mt-0.5 h-5 w-5 shrink-0"
+      />
 
-        <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
-          <h2
-            id="sub-type"
-            className="label-en text-lg font-bold text-brand-navy"
-          >
+      <div className="flex flex-col">
+        <p className="eyebrow text-brand-black/40">＋ Your Second Strength</p>
+
+        <h2 id="sub-type" className="mt-3 flex flex-wrap items-baseline gap-x-3">
+          <span className="label-en text-brand-navy text-base font-bold">
             {sub.englishName}
-          </h2>
-          <p className="text-sm font-semibold">{sub.name}</p>
-        </div>
-      </div>
+          </span>
+          <span className="text-note text-brand-black/60">{sub.name}</span>
+        </h2>
 
-      <p className="text-sm leading-relaxed text-brand-black/85">
-        {sub.subResultText}
-      </p>
+        <p className="text-brand-black/75 mt-3 text-sm leading-relaxed">
+          {sub.subResultText}
+        </p>
+      </div>
     </section>
   );
 }

@@ -5,6 +5,9 @@
  *
  * PRIMARY GOAL を表示する。SECONDARY GOAL は内部保持のみで表示しない
  * （docs/01_diagnosis-spec.md §28）。
+ *
+ * デザイン方針:
+ *   カードを増やさず、結果の「方向性」として1行で簡潔に見せる。
  */
 
 import { getGoal } from "@/lib/resultLabels";
@@ -18,21 +21,22 @@ export function GoalSection({ result }: GoalSectionProps) {
   const goal = getGoal(result);
 
   return (
-    <section className="flex flex-col gap-4" aria-labelledby="goal">
-      <p className="label-en text-xs text-brand-accent-blue">Your Goal</p>
+    <section
+      className="border-brand-navy flex flex-col border-l-2 pl-6"
+      aria-labelledby="goal"
+    >
+      <p className="eyebrow text-brand-black/40">Your Goal</p>
 
-      <div className="flex flex-wrap items-center gap-3">
-        <h2 id="goal" className="text-h3 font-bold">
+      <h2 id="goal" className="mt-3 flex items-baseline gap-3">
+        <span className="text-brand-navy text-xl font-bold sm:text-2xl">
           {goal.name}
-        </h2>
-        <span className="bg-brand-gradient rounded-badge px-3 py-1">
-          <span className="label-en text-xs font-semibold text-brand-white">
-            {goal.englishName}
-          </span>
         </span>
-      </div>
+        <span className="label-en text-brand-black/35 text-xs">
+          {goal.englishName}
+        </span>
+      </h2>
 
-      <p className="text-sm leading-relaxed text-brand-black/85">
+      <p className="text-brand-black/70 mt-3 text-sm leading-relaxed">
         {goal.resultSummary}
       </p>
     </section>
