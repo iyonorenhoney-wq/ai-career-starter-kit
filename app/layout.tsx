@@ -25,15 +25,38 @@ const notoSansJp = Noto_Sans_JP({
   preload: false,
 });
 
-/** 出典: docs/08_web-spec.md §120 / docs/09_lp.md §65-66 */
+const SITE_NAME = "AI CAREER STARTER KIT";
+const TITLE = "AI仕事診断｜あなたに合うAI活用方法を10問で診断";
+const DESCRIPTION =
+  "仕事効率化・制作・副業・商品化・仕組み化。10個の質問から、あなたに合うAI仕事スタイルと次の一歩を整理します。";
+
+/**
+ * 出典: docs/08_web-spec.md §120-122 / docs/09_lp.md §65-68
+ *
+ * OGP画像はまだ用意していないため、画像の指定は入れていない。
+ * 画像ができたら openGraph.images / twitter.images を追加するだけで有効になる。
+ * 本番URLが決まったら metadataBase も設定する（08 §126）。
+ */
 export const metadata: Metadata = {
-  title: "AI仕事診断｜あなたに合うAI活用方法を10問で診断",
-  description:
-    "仕事効率化・制作・副業・商品化・仕組み化。10個の質問から、あなたに合うAI仕事スタイルと次の一歩を整理します。",
+  title: TITLE,
+  description: DESCRIPTION,
+  openGraph: {
+    type: "website",
+    locale: "ja_JP",
+    siteName: SITE_NAME,
+    title: TITLE,
+    description: DESCRIPTION,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+  },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#080B10",
+  /* ブランドのBLACK（08 §14） */
+  themeColor: "#070A0F",
 };
 
 export default function RootLayout({

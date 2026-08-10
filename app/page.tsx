@@ -1,74 +1,69 @@
-/**
- * STEP2 時点の仮ページ。
- *
- * ここは最終的に LP（docs/09_lp.md の全11セクション）へ差し替える。
- * 現時点では「土台とブランドトークンが正しく動いているか」を目視確認するための
- * 内容にとどめ、デザインの作り込みは行わない。
- */
+import type { Metadata } from "next";
+import { Footer } from "@/components/layout/Footer";
+import { LpAfterDiagnosis } from "@/components/lp/LpAfterDiagnosis";
+import { LpCareerBook } from "@/components/lp/LpCareerBook";
+import { LpCtaButton } from "@/components/lp/LpCtaButton";
+import { LpFaq } from "@/components/lp/LpFaq";
+import { LpFinalCta } from "@/components/lp/LpFinalCta";
+import { LpHero } from "@/components/lp/LpHero";
+import { LpHowToReceive } from "@/components/lp/LpHowToReceive";
+import { LpProblem } from "@/components/lp/LpProblem";
+import { LpWhatYouGet } from "@/components/lp/LpWhatYouGet";
 
-/** 確認用のカラースウォッチ定義 */
-const SWATCHES = [
-  { name: "BLACK", hex: "#070A0F", className: "bg-brand-black" },
-  { name: "NAVY", hex: "#0B1D33", className: "bg-brand-navy" },
-  { name: "NAVY LIGHT", hex: "#153A5B", className: "bg-brand-navy-light" },
-  { name: "WHITE", hex: "#FFFFFF", className: "bg-brand-white" },
-  { name: "OFF WHITE", hex: "#F7F9FC", className: "bg-brand-off-white" },
-  { name: "TURQUOISE", hex: "#4BD6D6", className: "bg-brand-turquoise" },
-  {
-    name: "TURQUOISE LIGHT",
-    hex: "#7BE8E8",
-    className: "bg-brand-turquoise-light",
-  },
-  { name: "ACCENT BLUE", hex: "#1F6FB2", className: "bg-brand-accent-blue" },
-] as const;
+/**
+ * 診断LP。
+ *
+ * 出典: docs/09_lp.md
+ *
+ * 目的は商品説明ではなく「とりあえず診断してみよう」と思ってもらうこと。
+ * CTAは Hero / 中盤 / Final の3箇所で、文言と遷移先を統一する（同 §42-43）。
+ *
+ * 背景のリズム（同 §46）:
+ *   白 → オフホワイト → 白 → ダーク → 白 → オフホワイト → 白 → ダーク
+ */
+export const metadata: Metadata = {
+  title: "AI仕事診断｜あなたに合うAI活用方法を10問で診断",
+  description:
+    "仕事効率化・制作・副業・商品化・仕組み化。10個の質問から、あなたに合うAI仕事スタイルと次の一歩を整理します。",
+};
 
 export default function Home() {
   return (
-    <main className="mx-auto flex min-h-screen max-w-[720px] flex-col justify-center gap-12 px-6 py-20">
-      <header className="flex flex-col gap-3">
-        <p className="label-en text-brand-accent-blue text-sm">
-          AI Career Starter Kit
-        </p>
-        <h1 className="text-h2 font-bold">セットアップ完了</h1>
-        <p className="text-brand-black/70">
-          STEP2（型定義）まで完了しています。
-          <br />
-          診断機能・LP はこの後の STEP で実装します。
-        </p>
-      </header>
+    <div className="flex min-h-screen flex-col">
+      <main className="flex-1">
+        {/* 1. HERO */}
+        <LpHero />
 
-      {/* ブランドトークンが正しく読み込まれているかの確認用 */}
-      <section className="flex flex-col gap-4">
-        <h2 className="label-en text-brand-black/50 text-xs">Brand Colors</h2>
-        <ul className="grid grid-cols-2 gap-4 sm:grid-cols-4">
-          {SWATCHES.map((swatch) => (
-            <li key={swatch.name} className="flex flex-col gap-2">
-              <div
-                className={`border-brand-border h-16 rounded-card border ${swatch.className}`}
-              />
-              <div className="flex flex-col">
-                <span className="label-en text-brand-black text-[11px]">
-                  {swatch.name}
-                </span>
-                <span className="label-en text-brand-black/45 text-[10px]">
-                  {swatch.hex}
-                </span>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </section>
+        {/* 2. PROBLEM */}
+        <LpProblem />
 
-      {/* グラデーション確認 */}
-      <section className="flex flex-col gap-4">
-        <h2 className="label-en text-brand-black/50 text-xs">Gradients</h2>
-        <div className="bg-brand-gradient h-3 rounded-badge" />
-        <div className="bg-card-glow flex h-32 items-center justify-center rounded-card">
-          <p className="label-en text-brand-white text-sm">
-            Result Card Surface
-          </p>
+        {/* 3. WHAT YOU GET（診断で分かること / 5タイプ / MAIN × SUB） */}
+        <LpWhatYouGet />
+
+        {/* 4. AFTER DIAGNOSIS */}
+        <LpAfterDiagnosis />
+
+        {/* 5. CAREER BOOK（攻略BOOK / 7日チャレンジ） */}
+        <LpCareerBook />
+
+        {/* 中盤のCTA。BOOKの中身を見たあとに置く */}
+        <div className="pb-20 sm:pb-28">
+          <div className="mx-auto w-full max-w-[420px] px-6">
+            <LpCtaButton position="middle" />
+          </div>
         </div>
-      </section>
-    </main>
+
+        {/* 6. HOW TO RECEIVE */}
+        <LpHowToReceive />
+
+        {/* 7. FAQ ＋ この診断を作った人 */}
+        <LpFaq />
+
+        {/* 8. FINAL CTA */}
+        <LpFinalCta />
+      </main>
+
+      <Footer />
+    </div>
   );
 }

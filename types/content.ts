@@ -252,3 +252,47 @@ export type StyleContent = {
 
 /** 3スタイルすべてが揃っていることを型で保証する */
 export type StyleContentMap = Readonly<Record<DiagnosisStyle, StyleContent>>;
+
+// ============================================================================
+// 6. LPコンテンツ
+// 出典: docs/09_lp.md
+//
+// LPの目的は商品説明ではなく「診断を受けてみたい」と思ってもらうこと（同 §2）。
+// 文章はここへ集約し、コンポーネントには置かない。
+// ============================================================================
+
+/** 番号つきで並べる項目（診断で分かること / 受け取り方 など） */
+export type NumberedItem = {
+  readonly title: string;
+  readonly body: string;
+};
+
+/** LPで紹介する5タイプの概要。診断前に結果を予想させないため簡潔にとどめる（09 §21） */
+export type LpTypeSummary = {
+  readonly id: AIType;
+  readonly englishName: string;
+  readonly name: string;
+  readonly oneLine: string;
+  readonly keywords: readonly string[];
+  readonly icon: TypeIconName;
+};
+
+/** よくある質問 */
+export type FaqItem = {
+  readonly question: string;
+  readonly answer: string;
+};
+
+/** 診断後の流れの1ステップ */
+export type JourneyStep = {
+  readonly label: string;
+  readonly note: string;
+};
+
+/** この診断を作った人。将来、写真を差し替えられるように image を任意で持たせる */
+export type AuthorContent = {
+  readonly name: string;
+  readonly body: string;
+  /** 宣材写真のパス。未設定なら写真なしで表示する */
+  readonly imageSrc?: string;
+};
