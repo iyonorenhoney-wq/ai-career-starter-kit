@@ -21,6 +21,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { questions } from "@/data/questions";
+import { track } from "@/lib/analytics";
 import {
   ANSWER_ADVANCE_DELAY_MS,
   CALCULATING_TOTAL_MS,
@@ -202,6 +203,14 @@ export function useDiagnosis(): UseDiagnosis {
         }
 
         saveResult(outcome.result);
+        track({
+          name: "diagnosis_complete",
+          mainType: outcome.result.mainType,
+          subType: outcome.result.subType,
+          goal: outcome.result.primaryGoal,
+          style: outcome.result.style,
+          routeId: outcome.result.routeId,
+        });
         setState((prev) => ({
           ...prev,
           screen: "result",
@@ -223,6 +232,7 @@ export function useDiagnosis(): UseDiagnosis {
 
     const now = new Date().toISOString();
     persistProgress(state.answers, 0, now);
+    track({ name: "diagnosis_start" });
 
     setState((prev) => ({
       ...prev,
@@ -246,6 +256,8 @@ export function useDiagnosis(): UseDiagnosis {
       const nextIndex = isLast ? state.currentIndex : state.currentIndex + 1;
 
       persistProgress(nextAnswers, nextIndex, startedAt);
+      // 回答内容そのものは送らず、どの質問に答えたかだけを記録する（08 §118）
+      track({ name: "question_answer", questionId });
 
       setState((prev) => ({
         ...prev,
@@ -295,6 +307,7 @@ export function useDiagnosis(): UseDiagnosis {
   const restart = useCallback(() => {
     clearTimer();
     clearDiagnosis();
+    track({ name: "diagnosis_restart" });
     setState({ ...INITIAL_STATE, isRestored: true });
   }, [clearTimer]);
 

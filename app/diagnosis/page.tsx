@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DiagnosisContainer } from "@/components/diagnosis/DiagnosisContainer";
+import { PageViewTracker } from "@/components/ui/PageViewTracker";
 
 /**
  * 診断ページ。
@@ -20,11 +21,30 @@ export const metadata: Metadata = {
 export default function DiagnosisPage() {
   return (
     <div className="flex min-h-screen flex-col">
+      <PageViewTracker event="diagnosis_view" />
+
       <header className="mx-auto w-full max-w-[720px] px-6 pt-7 pb-2">
         <p className="eyebrow text-brand-black/35">AI Career Starter Kit</p>
       </header>
 
       <main className="mx-auto w-full max-w-[720px] flex-1 px-6 pt-8 pb-20 sm:pt-12">
+        {/*
+          診断はJavaScriptで動くため、読み込めていないと画面が空になる。
+          その場合に何が起きているのか分かるよう案内を出す。
+        */}
+        <noscript>
+          <div className="rounded-card border border-brand-border bg-brand-off-white px-6 py-7">
+            <p className="text-base font-bold">
+              診断を表示できませんでした
+            </p>
+            <p className="text-brand-black/70 mt-3 text-sm leading-loose">
+              この診断はJavaScriptを使用しています。
+              <br />
+              ブラウザの設定でJavaScriptを有効にしてから、ページを再読み込みしてください。
+            </p>
+          </div>
+        </noscript>
+
         <DiagnosisContainer />
       </main>
 

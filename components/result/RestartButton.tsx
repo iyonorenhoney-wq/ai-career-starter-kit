@@ -22,16 +22,49 @@ type RestartButtonProps = {
 export function RestartButton({ onRestart }: RestartButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
   const cancelRef = useRef<HTMLButtonElement>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
+  /** 開く前にフォーカスしていた要素。閉じたときにここへ戻す */
+  const openerRef = useRef<HTMLElement | null>(null);
 
-  // 開いたら安全側（キャンセル）へフォーカスを移し、Escapeで閉じられるようにする
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen) {
+      // 閉じたら、開く前に操作していたボタンへフォーカスを戻す
+      openerRef.current?.focus();
+      openerRef.current = null;
+      return;
+    }
 
+    openerRef.current = document.activeElement as HTMLElement | null;
+    // 開いたら安全側（キャンセル）へフォーカスを移す
     cancelRef.current?.focus();
 
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setIsOpen(false);
+      if (event.key === "Escape") {
+        setIsOpen(false);
+        return;
+      }
+
+      // ダイアログの外へフォーカスが出ないよう、Tabを内側で循環させる
+      if (event.key !== "Tab") return;
+
+      const focusable = dialogRef.current?.querySelectorAll<HTMLElement>(
+        "button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])",
+      );
+      if (focusable === undefined || focusable.length === 0) return;
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (first === undefined || last === undefined) return;
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     };
+
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [isOpen]);
@@ -64,6 +97,7 @@ export function RestartButton({ onRestart }: RestartButtonProps) {
               />
 
               <div
+                ref={dialogRef}
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="restart-title"

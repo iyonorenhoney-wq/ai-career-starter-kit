@@ -9,6 +9,7 @@ import { LpHero } from "@/components/lp/LpHero";
 import { LpHowToReceive } from "@/components/lp/LpHowToReceive";
 import { LpProblem } from "@/components/lp/LpProblem";
 import { LpWhatYouGet } from "@/components/lp/LpWhatYouGet";
+import { PageViewTracker } from "@/components/ui/PageViewTracker";
 
 /**
  * 診断LP。
@@ -30,6 +31,8 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
+      <PageViewTracker event="lp_view" />
+
       <main className="flex-1">
         {/* 1. HERO */}
         <LpHero />

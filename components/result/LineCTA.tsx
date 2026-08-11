@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * 公式LINE CTA
  *
@@ -17,6 +19,7 @@
  */
 
 import { ArrowRight } from "lucide-react";
+import { track } from "@/lib/analytics";
 import { IS_LINE_URL_CONFIGURED, LINE_URL } from "@/lib/constants";
 
 /** 攻略BOOKに入っているもの（01 §43 / 09 §27） */
@@ -115,6 +118,7 @@ export function LineCTA() {
             href={LINE_URL}
             target="_blank"
             rel="noopener noreferrer"
+            onClick={() => track({ name: "line_cta_click" })}
             className="group bg-brand-turquoise text-brand-navy flex min-h-15 w-full items-center justify-center gap-3 rounded-btn px-6 text-center font-bold transition-colors hover:bg-brand-turquoise-light"
           >
             専用攻略BOOKを受け取る
