@@ -35,9 +35,11 @@ const DESCRIPTION =
  *
  * OGP画像はまだ用意していないため、画像の指定は入れていない。
  * 画像ができたら openGraph.images / twitter.images を追加するだけで有効になる。
- * 本番URLが決まったら metadataBase も設定する（08 §126）。
+ * metadataBase には本番URLを設定済み（08 §126）。相対パスのOGP画像を
+ * 絶対URLへ解決するために必要で、これがないと開発時に警告が出る。
  */
 export const metadata: Metadata = {
+  metadataBase: new URL("https://ai-career-starter-kit.vercel.app"),
   title: TITLE,
   description: DESCRIPTION,
   openGraph: {
