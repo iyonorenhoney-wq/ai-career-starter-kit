@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page 01 Cover</title>
+  <link rel="stylesheet" href="./tokens.css">
+  <link rel="stylesheet" href="./components.css">
+</head>
+<body data-view="actual">
+  <main class="viewer">
+    <nav class="toolbar" aria-label="表示切り替え">
+      <button type="button" data-view-button="actual" aria-pressed="true">実寸（A4）</button>
+      <button type="button" data-view-button="phone" aria-pressed="false">スマホ幅縮小</button>
+    </nav>
+    <div class="page-shell">
+      <section class="page dark">
+        <div class="corner-mark" aria-hidden="true"></div>
+        <div class="cover-safe">
+          <p class="eyebrow">AI CAREER STARTER KIT</p>
+          <h1 class="cover-title">あなた専用<br>AIキャリア攻略BOOK</h1>
+          <div class="cover-line"></div>
+          <div class="cover-meta">
+            <div>
+              <p class="eyebrow">MAIN TYPE</p>
+              <p class="value">AI CREATOR</p>
+            </div>
+            <div>
+              <p class="eyebrow">GOAL</p>
+              <p class="value">副業・収益化</p>
+            </div>
+            <div>
+              <p class="eyebrow">Diagnosis ID</p>
+              <div class="diagnosis-line" aria-label="Diagnosis ID記入線"></div>
+            </div>
+          </div>
+          <p class="cover-byline">by MOMOKA</p>
+        </div>
+      </section>
+    </div>
+  </main>
+  <script>
+    document.querySelectorAll("[data-view-button]").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.body.dataset.view = button.dataset.viewButton;
+        document.querySelectorAll("[data-view-button]").forEach((item) => {
+          item.setAttribute("aria-pressed", String(item === button));
+        });
+      });
+    });
+  </script>
+</body>
+</html>

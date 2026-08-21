@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page 27 Prompt P-08</title>
+  <link rel="stylesheet" href="./tokens.css">
+  <link rel="stylesheet" href="./components.css">
+</head>
+<body data-view="actual">
+  <main class="viewer">
+    <nav class="toolbar" aria-label="表示切り替え">
+      <button type="button" data-view-button="actual" aria-pressed="true">実寸（A4）</button>
+      <button type="button" data-view-button="phone" aria-pressed="false">スマホ幅縮小</button>
+    </nav>
+    <div class="page-shell">
+      <section class="page light-off">
+        <div class="running-head">PROMPT COLLECTION</div>
+        <div class="safe">
+          <article class="prompt-card">
+            <div class="prompt-heading">
+              <span class="badge">CATEGORY：副業</span>
+              <h1 class="h3">P-08｜価格設定・提案文</h1>
+            </div>
+            <section class="prompt-section">
+              <p class="eyebrow">WHEN</p>
+              <p class="body-text">作品に値段をつけ、相手への提案文を書くとき</p>
+            </section>
+            <section class="prompt-section">
+              <p class="eyebrow">PROMPT</p>
+              <div class="prompt-box">あなたは価格設定・提案文作成のアシスタントです。
+
+【目的】
+私が作品に価格をつけ、相手に送る提案文を作る手助けをしてください。
+ただし、具体的な金額の相場を断定しないでください。
+
+【私の情報】
+作品の種類：[ここに書く]
+制作にかかった時間の目安：[ここに書く]
+難易度（自分の感覚でよい）：[ここに書く]
+修正対応の回数（何回まで対応するか）：[ここに書く]
+納品物の形式（データ形式・提供方法）：[ここに書く]
+利用範囲（個人利用のみ／商用利用可など）：[ここに書く]
+
+【前提】
+・あなたが持っている価格相場の情報は古い、または不確実な場合があります
+・具体的な金額を断定したり、「相場は○○円です」と言い切ったりしないでください
+・分からない・確認できない情報は「確認できません」と明示してください
+
+【判断基準】
+価格に影響しうる一般的な考え方（断定しない範囲で）：
+・制作時間が長いほど、難易度が高いほど、修正対応が多いほど、価格を上げる要因になりやすい
+・商用利用や納品物の範囲が広いほど、価格を上げる要因になりやすい
+この考え方はあくまで一般論であり、実際の金額は本人が判断してください。
+
+【進め方】
+1. 上の入力情報のうち、価格を考えるために必要な項目が揃っているか確認してください。欠けている項目があれば、価格の話をする前に質問してください
+2. 揃っている情報から、価格を考える際に整理しておくべきポイントを挙げてください（金額は断定しない）
+3. 相場感について触れる場合は、必ず「これは参考情報であり、断定はできません」と明記した上で、幅を持たせた考え方を示してください
+4. 相手に送る提案文の下書きを作成してください。価格欄は私が自分で数字を入れられるよう空欄にしてください
+
+【出力してほしい内容】
+①価格を考える際に整理すべきポイント
+②相場についてのコメント（断定しないことを明記）
+③提案文の下書き（価格部分は空欄）
+
+【出力形式】
+①②③の見出しに分けて出力してください。
+
+【情報が不足している場合】
+制作時間・難易度・修正回数・納品物・利用範囲のいずれかが空欄の場合、価格の話に進まず、先にその項目を質問してください。</div>
+            </section>
+            <section class="prompt-section">
+              <p class="eyebrow">CUSTOM</p>
+              <p class="body-text">[ここに書く]6箇所を実際の制作内容に書き換えて使用</p>
+            </section>
+            <section class="prompt-section">
+              <p class="eyebrow">INPUT EXAMPLE</p>
+              <div class="input-example">作品の種類：LP制作／制作時間：約10時間／難易度：中（初めてのジャンル）<br>修正対応：2回まで／納品物：完成データ一式＋公開URL／利用範囲：商用利用可</div>
+            </section>
+          </article>
+        </div>
+        <div class="footer">27</div>
+      </section>
+    </div>
+  </main>
+  <script>
+    document.querySelectorAll("[data-view-button]").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.body.dataset.view = button.dataset.viewButton;
+        document.querySelectorAll("[data-view-button]").forEach((item) => {
+          item.setAttribute("aria-pressed", String(item === button));
+        });
+      });
+    });
+  </script>
+</body>
+</html>

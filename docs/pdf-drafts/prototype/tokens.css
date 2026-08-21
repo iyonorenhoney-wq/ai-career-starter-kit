@@ -1,0 +1,38 @@
+:root {
+  /* カラー */
+  --color-black: #070A0F;
+  --color-navy: #0B1D33;
+  --color-navy-light: #153A5B;
+  --color-white: #FFFFFF;
+  --color-off-white: #F7F9FC;
+  --color-turquoise: #4BD6D6;
+  --color-turquoise-light: #7BE8E8;
+  --color-accent-blue: #1F6FB2;
+  --color-border: #DBE2EA;
+  --color-tint: #F4F7FB;
+
+  /* フォント */
+  --font-jp: "Noto Sans JP", sans-serif;
+  --font-en: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* サイズ階層 */
+  --fs-display: 42pt;
+  --fs-h1: 32pt;
+  --fs-h2: 22pt;
+  --fs-h3: 18pt;
+  --fs-body: 12pt;
+  --fs-small: 10pt;
+  --fs-eyebrow: 9pt;
+  --fs-mono: 10.5pt;
+
+  /* スペーシングスケール（8ptベース） */
+  --sp-1: 4pt; --sp-2: 8pt; --sp-3: 12pt; --sp-4: 16pt;
+  --sp-6: 24pt; --sp-8: 32pt; --sp-12: 48pt; --sp-16: 64pt;
+
+  /* 角丸 */
+  --radius-chip: 999pt;
+  --radius-card: 8pt;
+  --radius-prompt-card: 12pt;
+  --radius-checkbox: 4pt;
+}

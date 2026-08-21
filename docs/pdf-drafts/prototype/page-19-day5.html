@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Page 19 Day5</title>
+  <link rel="stylesheet" href="./tokens.css">
+  <link rel="stylesheet" href="./components.css">
+</head>
+<body data-view="actual">
+  <main class="viewer">
+    <nav class="toolbar" aria-label="表示切り替え">
+      <button type="button" data-view-button="actual" aria-pressed="true">実寸（A4）</button>
+      <button type="button" data-view-button="phone" aria-pressed="false">スマホ幅縮小</button>
+    </nav>
+    <div class="page-shell">
+      <section class="page light-off">
+        <div class="running-head">7-DAY CHALLENGE</div>
+        <div class="safe">
+          <h1 class="h1">DAY 05</h1>
+          <p class="h2">制作</p>
+          <div class="section">
+            <p class="eyebrow">WHY</p>
+            <p class="body-text">完璧を目指すと手が止まる。今日は完成させる日、磨くのは明日（Day6）と決めておくと動きやすい。</p>
+          </div>
+          <div class="section">
+            <p class="eyebrow">ACTION</p>
+            <p class="body-text">Day4の構成をもとに実際に制作する。まず完成優先。</p>
+          </div>
+          <div class="section">
+            <p class="eyebrow">WORK</p>
+            <div class="step-list">
+              <div class="step-row"><span class="step-number">1</span><p class="body-text">STEP1　骨組みを作る（一番大きな要素だけ先に置く）</p><span class="checkbox"></span></div>
+              <div class="step-row"><span class="step-number">2</span><p class="body-text">STEP2　必要な文章・素材を入れる</p><span class="checkbox"></span></div>
+              <div class="step-row"><span class="step-number">3</span><p class="body-text">STEP3　全体を一度最後まで完成させる</p><span class="checkbox"></span></div>
+              <div class="step-row"><span class="step-number">4</span><p class="body-text">STEP4　細かい修正はDay6へ回す</p><span class="checkbox"></span></div>
+            </div>
+          </div>
+          <div class="section">
+            <p class="eyebrow">SUPPORT PROMPT</p>
+            <span class="badge blue">P-04（制作中の壁打ち・詰まったとき用プロンプト）</span>
+          </div>
+          <div class="section">
+            <p class="eyebrow">DONE CONDITION</p>
+            <p class="body-text"><span class="checkbox"></span> STEP3まで進み、一通り完成している（70〜80%でよい）</p>
+          </div>
+          <div class="section">
+            <p class="eyebrow">LINE REPORT</p>
+            <div class="report-box"><p class="body-text">「Day5完了！完成度：○%」</p></div>
+          </div>
+        </div>
+        <div class="footer">19</div>
+      </section>
+    </div>
+  </main>
+  <script>
+    document.querySelectorAll("[data-view-button]").forEach((button) => {
+      button.addEventListener("click", () => {
+        document.body.dataset.view = button.dataset.viewButton;
+        document.querySelectorAll("[data-view-button]").forEach((item) => {
+          item.setAttribute("aria-pressed", String(item === button));
+        });
+      });
+    });
+  </script>
+</body>
+</html>
