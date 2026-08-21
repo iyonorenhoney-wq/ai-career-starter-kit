@@ -18,6 +18,7 @@
 
 import { TypeIcon } from "@/components/ui/TypeIcon";
 import {
+  getBookCode,
   getCombination,
   getGoal,
   getMainType,
@@ -36,6 +37,7 @@ export function ResultShareCard({ result }: ResultShareCardProps) {
   const goal = getGoal(result);
   const combination = getCombination(result);
   const styleLabel = getStyleLabel(result);
+  const bookCode = getBookCode(result);
 
   return (
     <div className="bg-card-glow relative overflow-hidden rounded-card px-7 pt-7 pb-6 text-brand-white sm:px-9 sm:pt-9">
@@ -99,16 +101,37 @@ export function ResultShareCard({ result }: ResultShareCardProps) {
           {combination.oneLine}
         </p>
 
-        {/* フッター：診断IDとブランド（08 §62-63, §83） */}
-        <div className="mt-8 flex items-end justify-between gap-3 border-t border-brand-white/10 pt-5">
-          <p className="label-en text-brand-white/35 text-[10px]">
-            {result.resultId}
-          </p>
-          <div className="text-right">
-            <p className="eyebrow text-brand-white/55 text-[10px]">
-              AI Career Starter Kit
+        {/*
+          フッター：BOOK CODE・診断ID・ブランド（08 §62-63, §83）
+
+          BOOK CODE はどの攻略BOOKを送るかを示す管理用のコード。
+          診断IDと同じ「管理情報」の区画へ置き、STYLE や SUB TYPE から
+          離すことで見間違いを防ぐ。
+          ターコイズを使わないことで、STYLEとは役割が違うことを色でも分ける。
+
+          カードが縦に伸びるとスクリーンショットの下端が切れやすくなるため、
+          独立した枠は設けず、フッター内の1行として収めている。
+        */}
+        <div className="mt-7 border-t border-brand-white/10 pt-4">
+          <div className="flex items-baseline justify-between gap-3">
+            <span className="eyebrow text-brand-white/40 text-[10px]">
+              Book Code
+            </span>
+            <span className="label-en text-brand-white text-xs font-semibold">
+              {bookCode}
+            </span>
+          </div>
+
+          <div className="mt-3 flex items-end justify-between gap-3">
+            <p className="label-en text-brand-white/35 text-[10px]">
+              {result.resultId}
             </p>
-            <p className="text-brand-white/35 mt-1 text-[10px]">by MOMOKA</p>
+            <div className="text-right">
+              <p className="eyebrow text-brand-white/55 text-[10px]">
+                AI Career Starter Kit
+              </p>
+              <p className="text-brand-white/35 mt-1 text-[10px]">by MOMOKA</p>
+            </div>
           </div>
         </div>
       </div>

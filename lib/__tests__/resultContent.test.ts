@@ -17,6 +17,7 @@ import { resultTypes } from "@/data/resultTypes";
 import { styles } from "@/data/styles";
 import { AI_TYPES, GOALS } from "@/lib/constants";
 import {
+  getBookCode,
   getCombination,
   getGoal,
   getMainType,
@@ -338,5 +339,81 @@ describe("AI活用スコアの表示データ", () => {
   it("MAIN と SUB に印がつく", () => {
     expect(rows.filter((r) => r.isMain).map((r) => r.type)).toEqual(["creator"]);
     expect(rows.filter((r) => r.isSub).map((r) => r.type)).toEqual(["builder"]);
+  });
+});
+
+// ============================================================================
+describe("BOOK CODE（攻略BOOKの配布に使う）", () => {
+  it("15ルートすべてで一意になる", () => {
+    const codes = new Map<string, string>();
+
+    for (const mainType of AI_TYPES) {
+      for (const goal of GOALS) {
+        // SUB TYPE と STYLE は配布するBOOKに影響しないため、
+        // それらを変えてもコードが変わらないことを同時に確かめる
+        const subType = AI_TYPES.find((t) => t !== mainType);
+        if (subType === undefined) throw new Error("SUB TYPEが決まらない");
+
+        const code = getBookCode(buildResult(mainType, subType, goal, "hybrid"));
+        const routeId = `${mainType}_${goal}`;
+
+        expect(codes.has(code), `重複: ${code}`).toBe(false);
+        codes.set(code, routeId);
+      }
+    }
+
+    expect(codes.size).toBe(15);
+  });
+
+  it("SUB TYPE や STYLE を変えてもコードは変わらない", () => {
+    const base = getBookCode(buildResult("creator", "builder", "side", "hybrid"));
+
+    for (const subType of AI_TYPES) {
+      if (subType === "creator") continue;
+      for (const style of DIAGNOSIS_STYLES) {
+        expect(getBookCode(buildResult("creator", subType, "side", style))).toBe(
+          base,
+        );
+      }
+    }
+  });
+
+  it("routeId と1対1で対応する", () => {
+    const expected: Record<string, string> = {
+      smart_worker_work: "SMART WORKER / WORK",
+      smart_worker_side: "SMART WORKER / SIDE",
+      smart_worker_both: "SMART WORKER / BOTH",
+      creator_work: "CREATOR / WORK",
+      creator_side: "CREATOR / SIDE",
+      creator_both: "CREATOR / BOTH",
+      supporter_work: "SUPPORTER / WORK",
+      supporter_side: "SUPPORTER / SIDE",
+      supporter_both: "SUPPORTER / BOTH",
+      producer_work: "PRODUCER / WORK",
+      producer_side: "PRODUCER / SIDE",
+      producer_both: "PRODUCER / BOTH",
+      builder_work: "BUILDER / WORK",
+      builder_side: "BUILDER / SIDE",
+      builder_both: "BUILDER / BOTH",
+    };
+
+    for (const mainType of AI_TYPES) {
+      for (const goal of GOALS) {
+        const subType = AI_TYPES.find((t) => t !== mainType);
+        if (subType === undefined) throw new Error("SUB TYPEが決まらない");
+        const routeId = `${mainType}_${goal}`;
+        expect(getBookCode(buildResult(mainType, subType, goal))).toBe(
+          expected[routeId],
+        );
+      }
+    }
+  });
+
+  it("STYLE表記と区切り文字が違う（見間違い防止）", () => {
+    const result = buildResult("creator", "builder", "side", "hybrid");
+    // STYLE は × でつなぐ / BOOK CODE は / でつなぐ
+    expect(getStyleLabel(result).english).toContain("×");
+    expect(getBookCode(result)).not.toContain("×");
+    expect(getBookCode(result)).toContain("/");
   });
 });

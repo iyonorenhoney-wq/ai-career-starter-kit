@@ -55,6 +55,30 @@ export function getStyle(result: DiagnosisResult): StyleContent {
   return styles[result.style];
 }
 
+/**
+ * 攻略BOOKを特定するためのコード（例: CREATOR / SIDE）。
+ *
+ * 出典: docs/05_roadmaps.md §2, §20 / docs/06_pdf-spec.md §81
+ *
+ * 攻略BOOKは MAIN TYPE × GOAL の15冊で分かれている。
+ * Ver.1では公式LINEへ送られたスクリーンショットを見て手動で配布するため、
+ * どの1冊を送ればよいかがカード上で一目で分かるようにする。
+ *
+ * SUB TYPE と STYLE は配布するBOOKに影響しない。
+ * 見間違いを防ぐため、STYLE（`×` でつなぐ）とは区切り文字を変え、
+ * ここでは `/` を使う。
+ *
+ * routeId との対応:
+ *   CREATOR / SIDE  ->  creator_side
+ */
+export function getBookCode(result: DiagnosisResult): string {
+  const main = getMainType(result);
+  const goal = getGoal(result);
+  // 英語名から "AI " を外す（AI CREATOR -> CREATOR）
+  const mainCode = main.englishName.replace(/^AI\s+/, "");
+  return `${mainCode} / ${goal.englishName}`;
+}
+
 /** 結果カードなどで使うSTYLEの見せ方 */
 export type StyleLabel = {
   /** 英字表記（結果カード用） */
