@@ -4,7 +4,22 @@
 > `docs/` 配下の `00_` 〜 `09_` は仕様の原本であり、実装の都合で書き換えません。
 > このファイルは「実装がどこまで進んでいるか」を引き継ぐための作業メモです。
 >
-> 最終更新: 2026-08-10 / STEP10（全STEP）完了時点
+> 最終更新: 2026-08-11
+>
+> ## ⚠ いま公開作業中です
+>
+> 診断アプリは完成し、公式LINE URLの設定とBOOK CODEの実装まで終わっています。
+> **次にやることは `docs/HANDOFF-RELEASE.md` に書いてあります。**
+> このファイル（全体の仕様）を読んだあと、必ずそちらを読んでください。
+>
+> このファイルは STEP10 完了時点の内容です。それ以降の変更は次のとおりです。
+>
+> | 変更 | 内容 |
+> | --- | --- |
+> | 公式LINE URL | `https://lin.ee/vepNrqwH` を `.env.local` に設定済み |
+> | BOOK CODE | 結果カードに追加（15冊の手動配布用） |
+> | テスト件数 | 150件 → **154件** |
+> | `docs/pdf-drafts/` | commit `79299bd` で追加。**要調査** |
 
 ---
 
@@ -13,9 +28,10 @@
 新しく担当する場合、**この順で読んでください。**
 
 1. このファイル（全体像・確定事項・禁止事項）
-2. `docs/08_web-spec.md`（Web技術・デザイン仕様）
-3. `docs/01_diagnosis-spec.md`（診断の機能・画面・導線）
-4. `docs/02_scoring-system.md`（採点ロジック）
+2. **`docs/HANDOFF-RELEASE.md`（いまやる作業）**
+3. `docs/08_web-spec.md`（Web技術・デザイン仕様）
+4. `docs/01_diagnosis-spec.md`（診断の機能・画面・導線）
+5. `docs/02_scoring-system.md`（採点ロジック）
 
 **最重要のルール**
 
@@ -298,12 +314,16 @@ intro → question → calculating → result
 視覚階層（上から強い順）:
 
 ```
-MAIN TYPE → STYLE → GOAL → SUB TYPE → ONE LINE → Diagnosis ID
+MAIN TYPE → STYLE → GOAL → SUB TYPE → ONE LINE → BOOK CODE → Diagnosis ID
 ```
 
-- カード高さは 320〜430px幅で **約550〜615px**。1画面に収まる
-- 最長の組み合わせ（`AI SMART WORKER × BUILDER HYBRID`）でも崩れないことを確認済み
-- 全20組み合わせを320pxで検証済み
+- カード高さは 320〜430px幅で **約571〜651px**。1画面に収まる
+- 最長の組み合わせ（`AI SMART WORKER × BUILDER HYBRID` / `SMART WORKER / BOTH`）でも崩れない
+- 全20組み合わせ・全15ルートを320pxで検証済み
+
+**BOOK CODE**（15冊の手動配布用）をフッターに追加済みです。
+表示位置・区切り文字・色は変更しないでください。
+詳細は `docs/HANDOFF-RELEASE.md` の「2.〜4.」を参照。
 
 ### Webで表示していない項目（意図的）
 
@@ -486,11 +506,12 @@ Ver.1では **MOMOKA本人が手動で返信**します。
 
 | 変数名 | 現在の値 | 必須 |
 | --- | --- | --- |
-| `NEXT_PUBLIC_LINE_URL` | **未設定** | 公開時に必須 |
+| `NEXT_PUBLIC_LINE_URL` | **設定済み** `https://lin.ee/vepNrqwH` | 公開時に必須 |
 
 - テンプレート: `.env.local.example`
 - `.env.local` は `.gitignore` 済み
-- **未設定のまま公開しないでください。** 攻略BOOKの導線が成立しません
+- `.env.local` に設定済み。**ただし `.gitignore` されているためデプロイされません**
+- **Vercel側にも同じ環境変数の登録が必要です**（`docs/HANDOFF-RELEASE.md` 参照）
 
 ---
 
@@ -500,7 +521,7 @@ Ver.1では **MOMOKA本人が手動で返信**します。
 | --- | --- |
 | `npm run typecheck` | エラー0 |
 | `npm run lint` | エラー0・警告0 |
-| `npm run test` | **150件すべてPASS**（8ファイル） |
+| `npm run test` | **154件すべてPASS**（8ファイル） |
 | `npm run build` | 成功 |
 
 ### テストファイル
@@ -515,6 +536,8 @@ Ver.1では **MOMOKA本人が手動で返信**します。
 | `resultId.test.ts` | ID生成 |
 | `resultContent.test.ts` | 5タイプ・20組み合わせ・3GOAL・3STYLEの網羅 |
 | `diagnosisStorage.test.ts` | 保存・復元・異常系 |
+
+> `resultContent.test.ts` には BOOK CODE のテスト4件を追加済み。
 
 ### 初期ロード（gzip後）
 
